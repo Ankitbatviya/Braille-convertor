@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Braille Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span class="logo-text">Visionary</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Converter</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">Learn Braille</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="main-container">
+            
+            <div class="front-page-layout">
+                <div class="image-column">
+                    <img src="https://placehold.co/600x500/a3e635/1f2937?text=Vision+to+Touch" alt="Abstract visual representation of Braille dots." >
+                </div>
+                <div class="content-column">
+                    <h2>Convert Text to Braille</h2>
+                    <p>Enter your text below to see its Braille representation.</p>
+                    <div class="input-group">
+                        <input type="text" id="textInput" placeholder="Enter text here...">
+                        <button id="convertBtn">Convert</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output section -->
+            <div id="brailleOutput">
+                <p>Your Braille output will appear here...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
