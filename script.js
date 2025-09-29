@@ -65,7 +65,7 @@ function renderBraille(text) {
 // Convert button logic
 convertBtn.addEventListener('click', () => {
     renderBraille(textInput.value);
-    brailleOutput.scrollIntoView({ behavior: "smooth", block: "center" });
+   
 });
 
 // --- NEW: Copy Button Logic ---
