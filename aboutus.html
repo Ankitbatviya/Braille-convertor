@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Visionary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="icon" href="images/braille.png" type="image/png">
+    <style>
+        /* --- Global Variables --- */
+        :root {
+            --color-primary: #84cc16; /* Lime */
+            --color-primary-dark: #65a30d; /* Darker Lime */
+            --color-white: #ffffff;
+            --color-bg-light: #f9fafb;
+            --color-text-base: #1f2937; /* Dark Gray */
+            --color-text-darker: #111827;
+            --color-text-medium: #4b5563;
+            --color-text-light: #6b7280;
+            --color-border-subtle: #e5e7eb;
+            --color-border-light: #d1d5db;
+            --font-primary: 'Inter', sans-serif;
+            --border-radius-lg: 1rem;
+            --border-radius-md: 0.5rem;
+        }
+
+        /* --- General Body and Reset Styles --- */
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-white);
+            color: var(--color-text-base);
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        /* --- Navigation Bar Styles --- */
+        nav {
+            padding: 0 1rem;
+            border-bottom: 1px solid var(--color-border-subtle);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo svg {
+            height: 2rem;
+            width: 2rem;
+            color: var(--color-primary);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--color-text-darker);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--color-text-medium);
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: var(--color-text-darker);
+        }
+        
+        .nav-link.active {
+            color: var(--color-text-darker);
+            font-weight: 600;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(1);
+            height: 2px;
+            bottom: -1px;
+            left: 0;
+            background-color: var(--color-primary);
+            transform-origin: bottom left;
+        }
+
+        /* --- About Page Specific Styles --- */
+        .page-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem 1rem;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 3rem 0;
+            border-bottom: 1px solid var(--color-border-subtle);
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-text-darker);
+            margin: 0;
+        }
+
+        .page-header p {
+            font-size: 1.25rem;
+            color: var(--color-text-light);
+            margin-top: 0.5rem;
+        }
+
+        .text-section {
+            max-width: 720px;
+            margin: 0 auto 4rem auto;
+            text-align: center;
+        }
+
+        .text-section h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-base);
+        }
+
+        .text-section p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--color-text-light);
+        }
+
+        .features-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background-color: var(--color-bg-light);
+            border: 1px solid var(--color-border-subtle);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .feature-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-primary-dark);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: var(--color-text-medium);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .disclaimer-box {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border-light);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        
+        .disclaimer-box p {
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .features-section {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+    /* --- Add these styles for the output section --- */
+    #brailleOutput {
+        padding: 1.5rem 1rem; /* Reduce vertical and horizontal padding */
+        min-height: 120px;    /* Lower the minimum height */
+        gap: 0.75rem;         /* Decrease space between braille characters */
+    }
+
+    /* You can also optionally make the braille dots slightly smaller */
+    .dot {
+        width: 0.65rem; /* from 0.75rem */
+        height: 0.65rem;/* from 0.75rem */
+    }
+
+    .braille-cell {
+        width: 28px; /* from 32px */
+    }
+    /* --- End of new styles --- */
+    
+    .nav-links {
+        gap: 0.75rem;
+    }
+    .nav-link {
+        font-size: 0.875rem;
+    }
+    .logo-text {
+        display: none; /* Hide text on very small screens */
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span class="logo-text">Visionary</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Converter</a>
+                <a href="aboutus.html" class="nav-link active">About</a>
+                <a href="lern.html" class="nav-link">Learn Braille</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-container">
+        <header class="page-header">
+            <h1>Our Vision</h1>
+            <p>Making the world of Braille more transparent and accessible to everyone.</p>
+        </header>
+
+        <div class="about-content">
+            <div class="text-section">
+                <h3>The Story Behind Visionary</h3>
+                <p>Visionary was born from a simple idea: to demystify the Braille system for sighted individuals. Whether you are an educator preparing materials, a student learning about inclusive design, or simply curious, our tool provides an intuitive and immediate window into tactile writing. We believe that understanding is the first step toward greater accessibility and inclusion.</p>
+            </div>
+
+            <div class="features-section">
+                <div class="feature-card">
+                    <h4>Instant Conversion</h4>
+                    <p>Translate text to Grade 1 Braille in real-time, visualizing the 6-dot cell patterns as you type.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Unicode Support</h4>
+                    <p>Easily copy the standard Braille characters for use in digital documents, presentations, and applications.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Educational Tool</h4>
+                    <p>A perfect starting point for anyone wanting to learn the Braille alphabet and understand its fundamental structure.</p>
+                </div>
+            </div>
+
+            <div class="disclaimer-box">
+                <h4>A Note on Grade 1 Braille</h4>
+                <p>This tool focuses on <strong>Grade 1 Braille</strong>, a direct letter-for-letter substitution. It is ideal for learning and simple labels. For professional documents and books, <strong>Grade 2 Braille</strong> is used, which includes numerous contractions and shorthand rules not supported here.</p>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+
+</html>

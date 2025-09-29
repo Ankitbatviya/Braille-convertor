@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Braille - Visionary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="icon" href="images/braille.png" type="image/png">
+    <style>
+        /* --- Global Variables --- */
+        :root {
+            --color-primary: #84cc16; /* Lime */
+            --color-primary-dark: #65a30d; /* Darker Lime */
+            --color-white: #ffffff;
+            --color-bg-light: #f9fafb;
+            --color-text-base: #1f2937; /* Dark Gray */
+            --color-text-darker: #111827;
+            --color-text-medium: #4b5563;
+            --color-text-light: #6b7280;
+            --color-border-subtle: #e5e7eb;
+            --color-border-light: #d1d5db;
+            --font-primary: 'Inter', sans-serif;
+            --border-radius-lg: 1rem;
+            --border-radius-md: 0.5rem;
+        }
+
+        /* --- General Body and Reset Styles --- */
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-white);
+            color: var(--color-text-base);
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        /* --- Navigation Bar Styles --- */
+        nav {
+            padding: 0 1rem;
+            border-bottom: 1px solid var(--color-border-subtle);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo svg {
+            height: 2rem;
+            width: 2rem;
+            color: var(--color-primary);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--color-text-darker);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--color-text-medium);
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: var(--color-text-darker);
+        }
+
+        .nav-link.active {
+            color: var(--color-text-darker);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(1);
+            height: 2px;
+            bottom: -1px;
+            left: 0;
+            background-color: var(--color-primary);
+            transform-origin: bottom left;
+        }
+        
+        /* --- Learn Page Specific Styles --- */
+        .page-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem 1rem;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 3rem 0;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-text-darker);
+            margin: 0;
+        }
+
+        .page-header p {
+            font-size: 1.25rem;
+            color: var(--color-text-light);
+            margin-top: 0.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .section-title {
+            font-size: 1.75rem;
+            color: var(--color-text-darker);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-border-subtle);
+        }
+
+        .braille-chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .braille-card {
+            background-color: var(--color-bg-light);
+            border: 1px solid var(--color-border-subtle);
+            border-radius: var(--border-radius-lg);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .braille-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        .braille-card .letter {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--color-text-base);
+        }
+        
+        .braille-card .braille-unicode {
+            font-size: 1.5rem;
+            color: var(--color-text-light);
+        }
+        
+        /* --- Braille Cell and Dot Styles (used in cards) --- */
+        .braille-cell {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            width: 36px;
+            height: 54px;
+        }
+
+        .dot {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background-color: var(--color-border-light);
+        }
+
+        .dot.raised {
+            background-color: var(--color-text-base);
+        }
+        
+        .explanation-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--color-text-light);
+            max-width: 720px;
+        }
+        
+        .explanation-text code {
+            background-color: #eef2ff;
+            color: #4338ca;
+            padding: 0.2em 0.4em;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+    /* --- Add these styles for the output section --- */
+    #brailleOutput {
+        padding: 1.5rem 1rem; /* Reduce vertical and horizontal padding */
+        min-height: 120px;    /* Lower the minimum height */
+        gap: 0.75rem;         /* Decrease space between braille characters */
+    }
+
+    /* You can also optionally make the braille dots slightly smaller */
+    .dot {
+        width: 0.65rem; /* from 0.75rem */
+        height: 0.65rem;/* from 0.75rem */
+    }
+
+    .braille-cell {
+        width: 28px; /* from 32px */
+    }
+    /* --- End of new styles --- */
+    
+    .nav-links {
+        gap: 0.75rem;
+    }
+    .nav-link {
+        font-size: 0.875rem;
+    }
+    .logo-text {
+        display: none; /* Hide text on very small screens */
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span class="logo-text">Visionary</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Converter</a>
+                <a href="aboutus.html" class="nav-link">About</a>
+                <a href="lern.html" class="nav-link active">Learn Braille</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-container">
+        <header class="page-header">
+            <h1>Learn the Braille Alphabet</h1>
+            <p>Braille is a tactile system of reading and writing. Each character is made from a combination of six raised dots. Explore the Grade 1 alphabet below.</p>
+        </header>
+        
+        <h2 class="section-title">Letters (A-Z)</h2>
+        <div class="braille-chart-grid">
+            <div class="braille-card"><div class="letter">A</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠁</div></div>
+            <div class="braille-card"><div class="letter">B</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠃</div></div>
+            <div class="braille-card"><div class="letter">C</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠉</div></div>
+            <div class="braille-card"><div class="letter">D</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠙</div></div>
+            <div class="braille-card"><div class="letter">E</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠑</div></div>
+            <div class="braille-card"><div class="letter">F</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠋</div></div>
+            <div class="braille-card"><div class="letter">G</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠛</div></div>
+            <div class="braille-card"><div class="letter">H</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠓</div></div>
+            <div class="braille-card"><div class="letter">I</div><div class="braille-cell"><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠊</div></div>
+            <div class="braille-card"><div class="letter">J</div><div class="braille-cell"><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠚</div></div>
+
+            <div class="braille-card"><div class="letter">K</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠅</div></div>
+            <div class="braille-card"><div class="letter">L</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠇</div></div>
+            <div class="braille-card"><div class="letter">M</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠍</div></div>
+            <div class="braille-card"><div class="letter">N</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠝</div></div>
+            <div class="braille-card"><div class="letter">O</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠕</div></div>
+            <div class="braille-card"><div class="letter">P</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠏</div></div>
+            <div class="braille-card"><div class="letter">Q</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠟</div></div>
+            <div class="braille-card"><div class="letter">R</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠗</div></div>
+            <div class="braille-card"><div class="letter">S</div><div class="braille-cell"><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠎</div></div>
+            <div class="braille-card"><div class="letter">T</div><div class="braille-cell"><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div></div><div class="braille-unicode">⠞</div></div>
+
+            <div class="braille-card"><div class="letter">U</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div></div><div class="braille-unicode">⠥</div></div>
+            <div class="braille-card"><div class="letter">V</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div></div><div class="braille-unicode">⠧</div></div>
+            <div class="braille-card"><div class="letter">W</div><div class="braille-cell"><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div></div><div class="braille-unicode">⠺</div></div>
+            <div class="braille-card"><div class="letter">X</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div></div><div class="braille-unicode">⠭</div></div>
+            <div class="braille-card"><div class="letter">Y</div><div class="braille-cell"><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div></div><div class="braille-unicode">⠽</div></div>
+            <div class="braille-card"><div class="letter">Z</div><div class="braille-cell"><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div></div><div class="braille-unicode">⠵</div></div>
+        </div>
+        
+        <h2 class="section-title">Numbers & Punctuation</h2>
+        <p class="explanation-text">To write a number, you first use the number sign <code>⠼</code>, followed by the letters A-J for 1-9 and 0. Common punctuation marks also have their own unique characters.</p>
+        <div class="braille-chart-grid" style="margin-top: 2rem;">
+            <div class="braille-card"><div class="letter">#</div><div class="braille-cell"><div class="dot"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot raised"></div></div><div class="braille-unicode">⠼</div></div>
+            <div class="braille-card"><div class="letter">.</div><div class="braille-cell"><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div></div><div class="braille-unicode">⠲</div></div>
+            <div class="braille-card"><div class="letter">,</div><div class="braille-cell"><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><div class="braille-unicode">⠂</div></div>
+            <div class="braille-card"><div class="letter">?</div><div class="braille-cell"><div class="dot"></div><div class="dot"></div><div class="dot raised"></div><div class="dot"></div><div class="dot raised"></div><div class="dot raised"></div></div><div class="braille-unicode">⠦</div></div>
+        </div>
+
+    </main>
+
+</body>
+
+</html>
